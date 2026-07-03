@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบเก็บข้อมูลตารางง่ายๆ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        input, button {
+            padding: 8px 12px;
+            font-size: 16px;
+        }
+        input {
+            flex: 1;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .delete-btn {
+            background-color: #dc3545;
+            padding: 4px 8px;
+            font-size: 14px;
+        }
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>📝 ตารางเก็บข้อมูลอย่างง่าย</h2>
+
+    <form id="dataForm">
+        <input type="text" id="inputName" placeholder="กรอกชื่อ-นามสกุล" required>
+        <input type="text" id="inputDetail" placeholder="กรอกรายละเอียดเพิ่มเติม" required>
+        <button type="submit">เพิ่มข้อมูล</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ชื่อ-นามสกุล</th>
+                <th>รายละเอียด</th>
+                <th style="width: 80px; text-align: center;">จัดการ</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            </tbody>
+    </table>
+
+    <script>
+        const form = document.getElementById('dataForm');
+        const tableBody = document.getElementById('tableBody');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('inputName').value;
+            const detail = document.getElementById('inputDetail').value;
+
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${name}</td>
+                <td>${detail}</td>
+                <td style="text-align: center;">
+                    <button class="delete-btn" onclick="deleteRow(this)">ลบ</button>
+                </td>
+            `;
+
+            tableBody.appendChild(row);
+            form.reset();
+        });
+
+        function deleteRow(button) {
+            button.closest('tr').remove();
+        }
+    </script>
+
+</body>
+</html>
